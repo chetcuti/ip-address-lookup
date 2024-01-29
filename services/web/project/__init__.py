@@ -39,7 +39,7 @@ def home_post():
 
 
 def get_users_ip_address():
-    return str(request.environ["REMOTE_ADDR"])
+    return request.environ.get("HTTP_X_FORWARDED_FOR", request.remote_addr)
 
 
 def process_ip_address(ip_address):
