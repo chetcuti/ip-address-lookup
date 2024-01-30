@@ -58,8 +58,14 @@ def process_ip_address(ip_address):
             + result["city"]
             + ", "
             + result["regionName"]
+            + " ("
+            + result["region"]
+            + ")"
             + ", "
             + result["country"]
+            + " ("
+            + result["countryCode"]
+            + ")"
             + "</strong>"
             + "<BR>"
         )
