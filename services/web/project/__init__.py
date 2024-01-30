@@ -46,11 +46,36 @@ def process_ip_address(ip_address):
     page_body = ""
 
     try:
-        api_url = "http://ip-api.com/line/" + ip_address
-        result = requests.get(api_url).text
-        result = result.replace("success\n", "")
-        result = result.replace("\n", "<BR>")
-        page_body += result
+        api_url = "http://ip-api.com/json/" + ip_address
+        result = requests.get(api_url).json()
+
+        page_body += "<strong>" + result["query"] + "</strong><BR>"
+        page_body += "ISP: " + result["isp"] + "<BR>"
+        page_body += "Org: " + result["org"] + "<BR>"
+        page_body += "AS: " + result["as"] + "<BR>"
+        page_body += (
+            "Location: <strong>"
+            + result["city"]
+            + ", "
+            + result["regionName"]
+            + ", "
+            + result["country"]
+            + "</strong>"
+            + "<BR>"
+        )
+        page_body += "Postal Code: " + result["zip"] + "<BR>"
+        page_body += "Time Zone: " + result["timezone"] + "<BR>"
+        page_body += (
+            "Latitude & Longitude: "
+            + str(result["lat"])
+            + ", "
+            + str(result["lon"])
+            + "<BR>"
+        )
+
+        # result = result.replace("success\n", "")
+        # result = result.replace("\n", "<BR>")
+        # page_body += result
 
     except Exception:
         page_body += "Unable to lookup IP address, please try again."
