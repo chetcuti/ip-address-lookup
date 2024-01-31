@@ -8,15 +8,22 @@ app = Flask(__name__, static_folder="assets")
 site_title = "IP Address Lookup"
 
 
-@app.route("/")
-def home():
+@app.route("/<ip_address>", methods=["GET"])
+def home_get(ip_address):
+    sleep(0.25)
     page_body = ""
 
-    detected_ip_address = get_users_ip_address()
-    page_body += "<strong>Your Public IP Address</strong><BR>"
-    page_body += process_ip_address(detected_ip_address)
+    if ip_address == get_users_ip_address():
+        page_body += "<strong>Your Public IP Address</strong><BR>"
 
-    return display_homepage(detected_ip_address, page_body)
+    page_body += process_ip_address(ip_address)
+
+    return display_homepage(ip_address, page_body)
+
+
+@app.route("/", methods=["GET"])
+def home():
+    return home_get(get_users_ip_address())
 
 
 @app.route("/", methods=["POST"])
