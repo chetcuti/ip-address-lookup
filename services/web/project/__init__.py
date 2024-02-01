@@ -9,7 +9,7 @@ site_title = "IP Address Lookup"
 
 
 @app.route("/<ip_address>", methods=["GET"])
-def home_get(ip_address):
+def home_ip(ip_address):
     sleep(0.25)
     page_body = ""
 
@@ -23,7 +23,14 @@ def home_get(ip_address):
 
 @app.route("/", methods=["GET"])
 def home():
-    return home_get(get_users_ip_address())
+    sleep(0.25)
+
+    ip_address = get_users_ip_address()
+
+    page_body = "<strong>Your Public IP Address</strong><BR>"
+    page_body += process_ip_address(ip_address)
+
+    return display_homepage(ip_address, page_body)
 
 
 @app.route("/", methods=["POST"])
